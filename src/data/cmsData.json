@@ -1,0 +1,244 @@
+{
+  "bolsoverConfig": {
+    "film": {
+      "fullSrc": "/uploads/seed_full-campaign-film.mp4",
+      "teaserSrc": "/uploads/seed_bolsover-campaign-film.mp4",
+      "poster": "/uploads/seed_building.png",
+      "teaserSegments": [
+        {
+          "label": "Opening",
+          "start": 4,
+          "end": 6
+        },
+        {
+          "label": "Education",
+          "start": 24,
+          "end": 26
+        },
+        {
+          "label": "Green space",
+          "start": 48,
+          "end": 50
+        },
+        {
+          "label": "London",
+          "start": 74,
+          "end": 76
+        },
+        {
+          "label": "Return",
+          "start": 100,
+          "end": 102
+        }
+      ],
+      "desktopObjectPosition": "56% center",
+      "mobileObjectPosition": "58% center"
+    },
+    "brochurePath": "the-bolsover-brochure.pdf",
+    "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=3-8%20Bolsover%20Street%20Fitzrovia%20London%20W1",
+    "whatsappMessage": "Hello, I’m interested in The Bolsover. Please share the current availability and further information."
+  },
+  "heroData": {
+    "eyebrow": "Fitzrovia, London W1",
+    "titleLine1": "A Home That",
+    "titleLine2": "Brings London Closer",
+    "introCopy": "An exclusive collection of 24 luxury apartments at 3–8 Bolsover Street, London W1, set in the heart of Fitzrovia"
+  },
+  "lifestyle": [
+    {
+      "id": "study",
+      "label": "Study",
+      "destination": "University College London",
+      "time": "4 minutes",
+      "image": "/uploads/seed_ucl.png",
+      "copy": "A direct route to one of London’s leading academic institutions."
+    },
+    {
+      "id": "play",
+      "label": "Play",
+      "destination": "Regent’s Park",
+      "time": "10 minutes’ walk",
+      "image": "/uploads/seed_regents-park-kids.png",
+      "copy": "Open green space, gardens and everyday breathing room moments from home."
+    },
+    {
+      "id": "discover",
+      "label": "Discover",
+      "destination": "London Zoo",
+      "time": "Approximately 18 minutes",
+      "image": "/uploads/seed_london-zoo.png",
+      "copy": "A family destination within easy reach through the park."
+    },
+    {
+      "id": "connect",
+      "label": "Connect",
+      "destination": "Oxford Circus",
+      "time": "Approximately 8-10 minutes",
+      "image": "oxford-circus.png",
+      "copy": "The West End, Regent Street and central London shopping close at hand."
+    },
+    {
+      "id": "return",
+      "label": "Return",
+      "destination": "A quiet Fitzrovia address",
+      "time": "A quiet evening at home",
+      "image": "/uploads/seed_building.png",
+      "copy": "A calm residential return after the movement of the city."
+    }
+  ],
+  "locations": [
+    {
+      "category": "Regent’s Park",
+      "name": "Regent’s Park",
+      "time": "10 minutes’ walk",
+      "detail": "Queen Mary’s Gardens and open green space.",
+      "x": 24,
+      "y": 24
+    },
+    {
+      "category": "Education",
+      "name": "University College London",
+      "time": "4 minutes",
+      "detail": "A practical route for students and visiting academics.",
+      "x": 64,
+      "y": 64
+    },
+    {
+      "category": "Transport",
+      "name": "Great Portland Street station",
+      "time": "2-6 minutes",
+      "detail": "One block from the station.",
+      "x": 48,
+      "y": 42
+    },
+    {
+      "category": "Shopping",
+      "name": "Oxford Circus",
+      "time": "Approximately 8-10 minutes",
+      "detail": "Regent Street, Oxford Street and the West End.",
+      "x": 38,
+      "y": 76
+    },
+    {
+      "category": "Dining",
+      "name": "Charlotte Street",
+      "time": "6 minutes",
+      "detail": "Restaurants and cafes within the Fitzrovia neighbourhood.",
+      "x": 72,
+      "y": 56
+    },
+    {
+      "category": "Culture",
+      "name": "The West End",
+      "time": "Approximately 15 minutes",
+      "detail": "Theatres, galleries and central London evenings.",
+      "x": 68,
+      "y": 80
+    },
+    {
+      "category": "Health",
+      "name": "Harley Street",
+      "time": "Approximately 6 minutes",
+      "detail": "London’s established medical district nearby.",
+      "x": 25,
+      "y": 52
+    },
+    {
+      "category": "Airports of London",
+      "name": "London City Airport",
+      "time": "8.6 miles",
+      "detail": "Prototype airport marker using approved project data.",
+      "x": 82,
+      "y": 30
+    },
+    {
+      "category": "Airports of London",
+      "name": "Heathrow Airport",
+      "time": "Approximately 45 minutes",
+      "detail": "Prototype airport marker using approved project data.",
+      "x": 12,
+      "y": 78
+    }
+  ],
+  "services": [
+    {
+      "title": "Concierge service",
+      "description": "Dedicated 24/7 front-of-house service attending to deliveries, guest reception, and resident requests with discretionary warmth."
+    },
+    {
+      "title": "Monitored security",
+      "description": "Integrated building surveillance and smart keyless access points ensuring absolute peace of mind."
+    },
+    {
+      "title": "Comfort cooling",
+      "description": "Zoned climate control systems engineered for silent acoustic performance across all living areas."
+    },
+    {
+      "title": "Underfloor heating",
+      "description": "Independent ambient underfloor heating with digital thermostatic controls per room."
+    },
+    {
+      "title": "Bespoke joinery",
+      "description": "Custom European oak millwork, tailored wardrobe solutions, and hand-finished bronze architectural ironmongery."
+    },
+    {
+      "title": "Secure bicycle storage",
+      "description": "Dedicated subterranean storage facility with maintenance stations and private locker spaces."
+    },
+    {
+      "title": "Superfast connectivity",
+      "description": "Direct fiber-to-the-premise infrastructure pre-wired for high-bandwidth home automation."
+    }
+  ],
+  "apartments": [
+    {
+      "id": "studio",
+      "name": "Studio Residences",
+      "bedrooms": "Studio",
+      "count": 4,
+      "areaSqFt": "485 - 540 sq ft",
+      "areaSqM": "45.1 - 50.2 sq m",
+      "description": "Thoughtfully arranged studio residences featuring open plan living, bespoke joinery partitions, and luxury marble shower rooms.",
+      "image": "/uploads/seed_ChatGPT_Image_Jun_17__2026__04_39_25_PM.png",
+      "floorplan": "/uploads/seed_building.png",
+      "features": [
+        "Open-plan reception",
+        "Custom oak joinery",
+        "Marble bath suite",
+        "Miele integrated appliances"
+      ]
+    },
+    {
+      "id": "duplex",
+      "name": "Duplex Residences",
+      "bedrooms": "Duplex",
+      "count": 1,
+      "areaSqFt": "1,980 - 2,340 sq ft",
+      "areaSqM": "183.9 - 217.4 sq m",
+      "description": "Dynamic multi-level living with double-height volume spaces, architectural floating staircase, and private terrace courtyard.",
+      "image": "/uploads/seed_ChatGPT_Image_Jun_17__2026__02_18_47_PM.png",
+      "floorplan": "/uploads/seed_building.png",
+      "features": [
+        "Double-height reception ceiling",
+        "Private courtyard terrace",
+        "Architectural floating staircase",
+        "Integrated smart lighting controls"
+      ]
+    }
+  ],
+  "galleryImages": [
+    {
+      "id": "b1",
+      "src": "/uploads/seed_ChatGPT_Image_Jun_17__2026__03_28_03_PM.png",
+      "title": "Evening Exterior View",
+      "category": "Exterior",
+      "caption": "Warm glow from internal lamps illuminating the quiet Bolsover Street entrance."
+    }
+  ],
+  "contactData": {
+    "salesEmail": "enquiries@thebolsover-fitzrovia.co.uk",
+    "salesPhone": "+44 (0)20 7946 0188",
+    "address": "3–8 Bolsover Street, Fitzrovia, London W1W 6AB",
+    "openingHours": "Monday – Friday: 10:00 – 18:00 | Saturday: By Appointment"
+  }
+}

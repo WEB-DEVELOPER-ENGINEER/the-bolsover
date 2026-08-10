@@ -1,0 +1,57 @@
+# Next.js Build Output & TypeScript Cache
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+
+# Node Dependencies
+node_modules/
+.pnpm-store/
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+!.env.example
+
+# SQLite Local Database
+prisma/dev.db
+prisma/dev.db-journal
+*.db
+*.db-journal
+*.sqlite
+*.sqlite-journal
+
+# Runtime Uploads & Working Directory
+# (Static assets under public/assets, public/apartments, and public/maps are tracked)
+public/uploads/
+work/
+
+# Vercel CLI
+.vercel
+
+# System & Editor Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+

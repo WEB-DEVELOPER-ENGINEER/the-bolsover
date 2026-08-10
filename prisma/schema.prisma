@@ -1,0 +1,166 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MediaAsset {
+  id           String   @id @default(cuid())
+  url          String   @unique
+  filename     String
+  originalName String
+  size         Int
+  type         String
+  category     String
+  createdAt    DateTime @default(now())
+}
+
+model HeroData {
+  id         String   @id @default("hero_singleton")
+  eyebrow    String
+  titleLine1 String
+  titleLine2 String
+  introCopy  String
+  updatedAt  DateTime @updatedAt
+}
+
+model BolsoverConfig {
+  id                    String   @id @default("config_singleton")
+  fullSrc               String
+  teaserSrc             String
+  poster                String
+  brochurePath          String
+  floorPlansPdfPath     String?  @default("/assets/the-bolsover-floorplans.pdf")
+  googleMapsUrl         String
+  whatsappMessage       String
+  teaserSegments        String   @default("[]")
+  desktopObjectPosition String   @default("56% center")
+  mobileObjectPosition  String   @default("58% center")
+  homeHeroPoster        String?  @default("/assets/images/lifestyle-stills/arrival.png")
+  filmMainImage         String?  @default("/assets/images/lifestyle-stills/arrival.png")
+  architectureImage     String?  @default("/assets/images/lifestyle-stills/arrival.png")
+  apartmentsTeaserImage String?  @default("/apartments/apartment-living-kitchen.png")
+  updatedAt             DateTime @updatedAt
+}
+
+model FloorLevel {
+  id             String   @id @default(cuid())
+  floorCode      String
+  title          String
+  subtitle       String
+  levelIndex     Int      @default(0)
+  unitsRange     String
+  residenceCount Int      @default(1)
+  areaSqFtRange  String
+  areaSqMRange   String
+  highlight      String
+  description    String
+  masterImage    String
+  width          Int      @default(1000)
+  height         Int      @default(700)
+  order          Int      @default(0)
+  subUnits       String   @default("[]")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model ContactData {
+  id                String   @id @default("contact_singleton")
+  salesEmail        String
+  salesPhone        String
+  address           String
+  openingHours      String
+  eyebrow           String?  @default("Private enquiries")
+  title             String?  @default("Register your interest.")
+  description       String?  @default("Leave your details and the sales team will be in touch about availability at The Bolsover.")
+  consentText       String?  @default("I agree to be contacted about The Bolsover and to the handling of my information under the Privacy Policy.")
+  submitButtonLabel String?  @default("Register interest")
+  updatedAt         DateTime @updatedAt
+}
+
+model Lead {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  phone        String   @default("")
+  interestType String   @default("General Enquiry")
+  message      String   @default("")
+  status       String   @default("NEW") // NEW, CONTACTED, QUALIFIED, ARCHIVED
+  notes        String   @default("")
+  sourceForm   String   @default("Footer Registration")
+  customData   String   @default("{}") // JSON string for dynamic custom form fields
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model FormField {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  label       String
+  type        String   @default("text") // text, email, tel, select, textarea, checkbox
+  placeholder String   @default("")
+  required    Boolean  @default(false)
+  options     String   @default("[]") // JSON string array for select options
+  order       Int      @default(0)
+  enabled     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model IntroData {
+  id           String   @id @default("intro_singleton")
+  eyebrow      String   @default("The Bolsover")
+  titleLine1   String   @default("A quietly confident")
+  titleLine2   String   @default("London address.")
+  description  String   @default("A limited collection of 24 studio to four-bedroom apartments, combining Edwardian character with contemporary comfort in Fitzrovia, London W1.")
+  stat1Value   String   @default("24")
+  stat1Label   String   @default("Private Apartments")
+  stat2Value   String   @default("Studio – 4")
+  stat2Label   String   @default("Bedrooms & Duplex")
+  stat3Value   String   @default("W1")
+  stat3Label   String   @default("Fitzrovia, London")
+  image        String   @default("/assets/images/building.png")
+  imageTag     String   @default("Edwardian Architecture")
+  imageAddress String   @default("3–8 Bolsover Street")
+  updatedAt    DateTime @updatedAt
+}
+
+model PrivacyPolicy {
+  id            String   @id @default("privacy_policy")
+  title         String   @default("Privacy Policy")
+  effectiveDate String   @default("29 July 2026")
+  published     Boolean  @default(true)
+  sections      String   @default("[]")
+  updatedAt     DateTime @updatedAt
+}
+
+model Apartment {
+  id            String   @id @default(cuid())
+  number        Int      @unique
+  label         String
+  residenceType String   @default("")
+  area          String   @default("")
+  floor         String   @default("")
+  description   String   @default("")
+  slides        String   @default("[]")
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+

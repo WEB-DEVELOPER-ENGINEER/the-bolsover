@@ -1,0 +1,16 @@
+# Deployment exclusions. Static images, video, fonts and map files are
+# intentionally included in this handoff package.
+
+# Next.js Build Output & Dependencies
+.next/
+node_modules/
+
+# Runtime uploads & large local video media
+public/uploads/
+*.mp4
+work/
+
+# System Files & Logs
+.git/
+*.log
+.env
