@@ -48,7 +48,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenEnquire }) => {
     { label: "Apartments", href: "/apartments" },
     { label: "Floor plans", href: "/floor-plans" },
     { label: "Location", href: "/location" },
-    { label: "Enquire", href: "/#contact" },
   ];
 
   const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -113,7 +112,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenEnquire }) => {
             }}
             className="site-register-link"
           >
-            Register interest
+            Enquire
           </Link>
           <button
             type="button"
