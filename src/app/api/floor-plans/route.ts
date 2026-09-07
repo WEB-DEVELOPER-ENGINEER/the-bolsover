@@ -63,7 +63,7 @@ export async function POST(request: Request) {
         areaSqMRange: areaSqMRange || "45.0 - 92.0 sq m",
         highlight: highlight || "Architectural feature",
         description: description || "Floor level details",
-        masterImage: masterImage || "https://meshoiyjbcacrlvdaoov.supabase.co/storage/v1/object/public/bolsover-media/floor-plans/ground/master-plan.png",
+        masterImage: masterImage || "https://jaiybxlzrdnofevtlwrg.supabase.co/storage/v1/object/public/bolsover-media/floor-plans/ground/master-plan.png",
         order: nextOrder,
         subUnits: subUnitsStr
       }

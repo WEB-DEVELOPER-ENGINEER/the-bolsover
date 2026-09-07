@@ -5,46 +5,15 @@ import { getAuthenticatedAdmin } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const defaultApartmentNineSlides = [
-  {
-    id: "living-room",
-    label: "Living room",
-    caption: "Living, dining and kitchen arranged as one calm, light-filled room.",
-    kind: "image",
-    src: "/apartments/apartment-living-kitchen.png"
-  },
-  {
-    id: "kitchen-pan",
-    label: "Kitchen pan",
-    caption: "Drag across the frame to inspect the kitchen at your own pace.",
-    kind: "video",
-    src: "/apartments/kitchen-camera-pan.mp4"
-  }
-];
-
 async function seedDefaultApartments() {
   const defaultApartments = Array.from({ length: 24 }, (_, index) => {
     const number = index + 1;
     const formattedNumber = String(number).padStart(2, "0");
 
-    if (number === 9) {
-      return {
-        number,
-        label: `Apartment ${formattedNumber}`,
-        residenceType: "Studio residence",
-        area: "485–540 sq ft",
-        floor: "—",
-        description:
-          "Open-plan living, bespoke dark oak joinery and quiet natural light, composed for everyday life in Fitzrovia.",
-        slides: JSON.stringify(defaultApartmentNineSlides),
-        order: number
-      };
-    }
-
     return {
       number,
       label: `Apartment ${formattedNumber}`,
-      residenceType: "",
+      residenceType: "Luxury Residence",
       area: "",
       floor: "",
       description: "",

@@ -30,14 +30,20 @@ export async function GET(
     const fileSize = stat.size;
 
     const ext = filename.split(".").pop()?.toLowerCase();
-    let contentType = "application/octet-stream";
-    if (ext === "mp4") contentType = "video/mp4";
-    else if (ext === "webm") contentType = "video/webm";
-    else if (ext === "mov") contentType = "video/quicktime";
-    else if (ext === "png") contentType = "image/png";
-    else if (ext === "jpg" || ext === "jpeg") contentType = "image/jpeg";
-    else if (ext === "webp") contentType = "image/webp";
-    else if (ext === "pdf") contentType = "application/pdf";
+    const MIME_MAP: Record<string, string> = {
+      png: "image/png",
+      jpg: "image/jpeg",
+      jpeg: "image/jpeg",
+      webp: "image/webp",
+      avif: "image/avif",
+      svg: "image/svg+xml",
+      gif: "image/gif",
+      mp4: "video/mp4",
+      webm: "video/webm",
+      mov: "video/quicktime",
+      pdf: "application/pdf",
+    };
+    const contentType = (ext && MIME_MAP[ext]) || "application/octet-stream";
 
     const range = request.headers.get("range");
 
@@ -80,6 +86,7 @@ export async function GET(
     return new NextResponse(stream as any, {
       status: 200,
       headers: {
+        "Accept-Ranges": "bytes",
         "Content-Length": fileSize.toString(),
         "Content-Type": contentType,
         "Cache-Control": "public, max-age=31536000, immutable"

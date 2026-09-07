@@ -44,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenEnquire }) => {
   }
 
   const navLinks = [
-    { label: "Building", href: "/#architecture" },
+    { label: "The Bolsover", href: "/#architecture" },
     { label: "Apartments", href: "/apartments" },
     { label: "Floor plans", href: "/floor-plans" },
     { label: "Location", href: "/location" },

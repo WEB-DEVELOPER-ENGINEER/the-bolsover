@@ -29,6 +29,7 @@ export const ApartmentsEditor: React.FC = () => {
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ text: string; isError?: boolean } | null>(null);
   const [uploadingSlideId, setUploadingSlideId] = useState<string | null>(null);
+  const [slideDims, setSlideDims] = useState<Record<string, { width: number; height: number }>>({});
 
   // Sync selected apartment form state
   useEffect(() => {
@@ -79,7 +80,7 @@ export const ApartmentsEditor: React.FC = () => {
       label: "New Interior View",
       caption: "View description caption...",
       kind: "image",
-      src: "/apartments/apartment-living-kitchen.png"
+      src: ""
     };
     setActiveApartment({
       ...activeApartment,
@@ -505,13 +506,35 @@ export const ApartmentsEditor: React.FC = () => {
                         </div>
 
                         <div className="sm:col-span-2">
-                          <label className="block text-neutral-400 mb-1 uppercase tracking-wider">Media Asset Source URL</label>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="text-neutral-400 uppercase tracking-wider">Media Asset Source URL</label>
+                            {mediaAssets && mediaAssets.length > 0 && (
+                              <select
+                                onChange={(e) => {
+                                  if (e.target.value) {
+                                    handleSlideChange(idx, "src", e.target.value);
+                                    const isVid = e.target.value.endsWith(".mp4") || e.target.value.endsWith(".webm");
+                                    handleSlideChange(idx, "kind", isVid ? "video" : "image");
+                                  }
+                                }}
+                                defaultValue=""
+                                className="bg-neutral-900 border border-white/10 rounded px-2 py-0.5 text-[10px] text-luxury-brass focus:outline-none"
+                              >
+                                <option value="" disabled>Select from Media Vault...</option>
+                                {mediaAssets.map((asset) => (
+                                  <option key={asset.id} value={asset.url}>
+                                    {asset.originalName || asset.filename}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
                           <div className="flex gap-2">
                             <input
                               type="text"
                               value={slide.src}
                               onChange={(e) => handleSlideChange(idx, "src", e.target.value)}
-                              placeholder="/apartments/apartment-living-kitchen.png or HTTPS URL"
+                              placeholder="https://...supabase.co/storage/... or upload file"
                               className="w-full p-2.5 bg-black border border-white/10 rounded text-white focus:border-luxury-brass focus:outline-none text-xs transition-colors"
                             />
 
@@ -530,17 +553,41 @@ export const ApartmentsEditor: React.FC = () => {
 
                         {/* Media Preview Box */}
                         {slide.src && (
-                          <div className="sm:col-span-2 mt-2 p-2 bg-black border border-white/10 rounded flex items-center gap-4">
+                          <div className="sm:col-span-2 mt-2 p-2.5 bg-black border border-white/10 rounded flex items-center gap-4">
                             <div className="w-24 h-16 bg-neutral-900 rounded overflow-hidden relative shrink-0 flex items-center justify-center">
                               {slide.kind === "video" ? (
                                 <video src={slide.src} className="w-full h-full object-cover" muted />
                               ) : (
-                                <img src={slide.src} alt={slide.label} className="w-full h-full object-cover" />
+                                <img
+                                  src={slide.src}
+                                  alt={slide.label}
+                                  onLoad={(e) => {
+                                    const img = e.currentTarget;
+                                    setSlideDims((prev) => ({
+                                      ...prev,
+                                      [slide.src]: { width: img.naturalWidth, height: img.naturalHeight }
+                                    }));
+                                  }}
+                                  className="w-full h-full object-cover"
+                                />
                               )}
                             </div>
 
-                            <div className="text-[11px] font-mono text-neutral-400 truncate">
-                              <p className="text-white font-medium truncate">{slide.label}</p>
+                            <div className="text-[11px] font-mono text-neutral-400 truncate space-y-1">
+                              <div className="flex items-center gap-2">
+                                <p className="text-white font-medium truncate">{slide.label}</p>
+                                {slideDims[slide.src] && (
+                                  <span className={`px-1.5 py-0.5 rounded text-[9px] font-mono border ${
+                                    slideDims[slide.src].width >= 1920
+                                      ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
+                                      : slideDims[slide.src].width >= 1200
+                                      ? "bg-amber-500/10 border-amber-500/30 text-amber-300"
+                                      : "bg-red-500/10 border-red-500/30 text-red-300"
+                                  }`}>
+                                    {slideDims[slide.src].width} × {slideDims[slide.src].height} px {slideDims[slide.src].width >= 1920 ? "• Crisp" : ""}
+                                  </span>
+                                )}
+                              </div>
                               <p className="truncate text-neutral-500">{slide.src}</p>
                             </div>
                           </div>

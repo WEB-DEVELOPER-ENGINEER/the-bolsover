@@ -41,6 +41,7 @@ export const HeroFilmEditor: React.FC = () => {
   const [uploadingField, setUploadingField] = useState<string | null>(null);
   const [uploadingInfo, setUploadingInfo] = useState<{ name: string; sizeMb: string } | null>(null);
   const [uploadStatusMsg, setUploadStatusMsg] = useState<{ field: string; text: string; isError?: boolean } | null>(null);
+  const [introDims, setIntroDims] = useState<{ width: number; height: number } | null>(null);
 
   const handleHeroChange = (field: string, val: string) => {
     setHeroForm((prev) => ({ ...prev, [field]: val }));
@@ -340,6 +341,44 @@ export const HeroFilmEditor: React.FC = () => {
                 />
               </label>
             </div>
+
+            {/* Live Preview with Dimension Readout */}
+            {introForm.image && (
+              <div className="space-y-2">
+                <div className="relative w-full h-36 bg-neutral-950 border border-white/10 rounded overflow-hidden flex items-center justify-center p-1">
+                  <img
+                    src={introForm.image}
+                    alt="Intro Architectural Photography"
+                    onLoad={(e) => {
+                      const img = e.currentTarget;
+                      setIntroDims({ width: img.naturalWidth, height: img.naturalHeight });
+                    }}
+                    className="w-full h-full object-cover rounded"
+                  />
+                  <div className="absolute bottom-1 right-2 bg-black/80 px-2 py-0.5 rounded text-[9px] font-mono text-neutral-300">
+                    Live Preview
+                  </div>
+                </div>
+                {introDims && (
+                  <div className={`flex items-center justify-between px-2.5 py-1 rounded text-[10px] font-mono border ${
+                    introDims.width >= 1920
+                      ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
+                      : introDims.width >= 1200
+                      ? "bg-amber-500/10 border-amber-500/30 text-amber-300"
+                      : "bg-red-500/10 border-red-500/30 text-red-300"
+                  }`}>
+                    <span>{introDims.width} × {introDims.height} px</span>
+                    <span>
+                      {introDims.width >= 1920
+                        ? "✓ Full-Bleed Crisp"
+                        : introDims.width >= 1200
+                        ? "Good (1920px+ ideal)"
+                        : "Low Res (Blur risk on full screen)"}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               <div>

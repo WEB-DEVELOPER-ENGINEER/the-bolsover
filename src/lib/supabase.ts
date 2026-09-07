@@ -5,7 +5,7 @@ const getSupabaseUrl = () => {
   if (envUrl && envUrl.trim().startsWith("http")) {
     return envUrl.trim();
   }
-  return "https://meshoiyjbcacrlvdaoov.supabase.co";
+  return "https://jaiybxlzrdnofevtlwrg.supabase.co";
 };
 
 const getSupabaseKey = () => {
@@ -13,7 +13,7 @@ const getSupabaseKey = () => {
   if (serviceKey && serviceKey.trim()) return serviceKey.trim();
   const pubKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   if (pubKey && pubKey.trim()) return pubKey.trim();
-  return "sb_publishable_oWLD6U5dJTwoayeFqa3sbw_0qu0JQ6p";
+  return "sb_publishable_XCGrfm85iwP_Exl9SUcP5A_RLF9BhqP";
 };
 
 export const supabase = createClient(getSupabaseUrl(), getSupabaseKey(), {

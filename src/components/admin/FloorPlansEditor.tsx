@@ -527,7 +527,7 @@ export const FloorPlansEditor: React.FC = () => {
                   {(!formData.subUnits || formData.subUnits.length === 0) ? (
                     <p className="text-xs text-neutral-500 italic">No individual apartment layouts added yet.</p>
                   ) : (
-                    <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
+                    <div className="space-y-3 max-h-[32rem] overflow-y-auto pr-1">
                       {formData.subUnits.map((sub, sIdx) => (
                         <div key={sub.id || sIdx} className="p-3 bg-black/60 border border-white/10 rounded space-y-2">
                           <div className="flex items-center justify-between gap-2">
@@ -603,37 +603,91 @@ export const FloorPlansEditor: React.FC = () => {
                               placeholder="Sq M (e.g. 79 sq m)"
                               className="p-2 bg-neutral-900 border border-white/10 rounded text-white"
                             />
-                            <div className="flex items-center gap-2">
-                              <input
-                                type="text"
-                                value={sub.image}
-                                onChange={e => {
-                                  const next = [...(formData.subUnits || [])];
-                                  next[sIdx] = { ...next[sIdx], image: e.target.value };
-                                  setFormData({ ...formData, subUnits: next });
-                                }}
-                                placeholder="Image URL"
-                                className="flex-1 p-2 bg-neutral-900 border border-white/10 rounded text-white font-mono text-[11px]"
-                              />
-                              <label className="p-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded cursor-pointer shrink-0">
-                                <Upload className="w-3.5 h-3.5 text-luxury-brass" />
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <div>
+                              <span className="text-[10px] text-neutral-400 font-mono block mb-1">Floor Plan Image URL:</span>
+                              <div className="flex items-center gap-1.5">
                                 <input
-                                  type="file"
-                                  accept="image/*"
-                                  onChange={async (e) => {
-                                    const f = e.target.files?.[0];
-                                    if (f) {
-                                      const up = await uploadFile(f);
-                                      if (up) {
-                                        const next = [...(formData.subUnits || [])];
-                                        next[sIdx] = { ...next[sIdx], image: up.url };
-                                        setFormData({ ...formData, subUnits: next });
-                                      }
-                                    }
+                                  type="text"
+                                  value={sub.image}
+                                  onChange={e => {
+                                    const next = [...(formData.subUnits || [])];
+                                    next[sIdx] = { ...next[sIdx], image: e.target.value };
+                                    setFormData({ ...formData, subUnits: next });
                                   }}
-                                  className="hidden"
+                                  placeholder="Image URL (https://...supabase.co/storage/...)"
+                                  className="flex-1 p-2 bg-neutral-900 border border-white/10 rounded text-white font-mono text-[11px]"
                                 />
-                              </label>
+                                <label className="p-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded cursor-pointer shrink-0" title="Upload Image">
+                                  <Upload className="w-3.5 h-3.5 text-luxury-brass" />
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={async (e) => {
+                                      const f = e.target.files?.[0];
+                                      if (f) {
+                                        const up = await uploadFile(f);
+                                        if (up) {
+                                          const next = [...(formData.subUnits || [])];
+                                          next[sIdx] = { ...next[sIdx], image: up.url };
+                                          setFormData({ ...formData, subUnits: next });
+                                        }
+                                      }
+                                    }}
+                                    className="hidden"
+                                  />
+                                </label>
+                              </div>
+                            </div>
+
+                            <div>
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-[10px] text-neutral-400 font-mono block">Apartment Vector PDF:</span>
+                                {sub.pdfUrl && (
+                                  <a
+                                    href={sub.pdfUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-[10px] font-mono text-luxury-brass hover:underline inline-flex items-center gap-1"
+                                  >
+                                    <span>Preview PDF</span>
+                                  </a>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-1.5">
+                                <input
+                                  type="text"
+                                  value={sub.pdfUrl || ""}
+                                  onChange={e => {
+                                    const next = [...(formData.subUnits || [])];
+                                    next[sIdx] = { ...next[sIdx], pdfUrl: e.target.value };
+                                    setFormData({ ...formData, subUnits: next });
+                                  }}
+                                  placeholder="PDF URL (https://...supabase.co/storage/...)"
+                                  className="flex-1 p-2 bg-neutral-900 border border-white/10 rounded text-white font-mono text-[11px]"
+                                />
+                                <label className="p-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded cursor-pointer shrink-0" title="Upload PDF">
+                                  <Upload className="w-3.5 h-3.5 text-amber-400" />
+                                  <input
+                                    type="file"
+                                    accept="application/pdf"
+                                    onChange={async (e) => {
+                                      const f = e.target.files?.[0];
+                                      if (f) {
+                                        const up = await uploadFile(f);
+                                        if (up) {
+                                          const next = [...(formData.subUnits || [])];
+                                          next[sIdx] = { ...next[sIdx], pdfUrl: up.url };
+                                          setFormData({ ...formData, subUnits: next });
+                                        }
+                                      }
+                                    }}
+                                    className="hidden"
+                                  />
+                                </label>
+                              </div>
                             </div>
                           </div>
                         </div>

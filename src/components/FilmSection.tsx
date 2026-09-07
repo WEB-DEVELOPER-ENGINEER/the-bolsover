@@ -13,7 +13,7 @@ import {
 import { useCMS } from "@/context/CMSContext";
 import { bolsoverConfig as defaultBolsoverConfig } from "@/data/projectData";
 
-const quoteLines = ["One address.", "Many ways to live London."];
+const quoteLines = ["Where Heritage", "Meets Modern Living."];
 
 const ArrowOut = () => (
   <svg aria-hidden="true" viewBox="0 0 20 20" className="h-4 w-4" fill="none">
@@ -64,7 +64,7 @@ export const FilmSection: React.FC = () => {
   );
   const leftRotate = useTransform(storyProgress, [0.0, 0.32], [-2, 0]);
   const leftScale = useTransform(storyProgress, [0.0, 0.32], [1.08, 1]);
-  const leftShade = useTransform(storyProgress, [0.0, 0.32], [0.18, 0.45]);
+  const leftShade = useTransform(storyProgress, [0.0, 0.32], [0.11, 0.27]);
   const leftTextOpacity = useTransform(storyProgress, [0.08, 0.22, 0.28, 0.34], [0, 1, 1, 0]);
   const leftTextY = useTransform(storyProgress, [0.08, 0.22], [20, 0]);
   // Card 1 slides UP smoothly with soft cubic curve while Card 2 expands underneath
@@ -82,7 +82,7 @@ export const FilmSection: React.FC = () => {
     ["inset(12% 24% 12% 24%)", "inset(12% 24% 12% 24%)", "inset(0% 0% 0% 0%)"]
   );
   const buildingScale = useTransform(storyProgress, [0.26, 0.62], [1.08, 1]);
-  const imageShade = useTransform(storyProgress, [0.26, 0.62], [0.18, 0.45]);
+  const imageShade = useTransform(storyProgress, [0.26, 0.62], [0.11, 0.27]);
   const centerTextOpacity = useTransform(storyProgress, [0.38, 0.50, 0.58, 0.64], [0, 1, 1, 0]);
   const centerTextY = useTransform(storyProgress, [0.38, 0.50], [20, 0]);
   // Card 2 slides UP smoothly with soft cubic curve while Card 3 expands underneath
@@ -101,7 +101,7 @@ export const FilmSection: React.FC = () => {
   );
   const rightRotate = useTransform(storyProgress, [0.0, 0.56, 0.92], [2, 2, 0]);
   const rightScale = useTransform(storyProgress, [0.56, 0.92], [1.08, 1]);
-  const rightShade = useTransform(storyProgress, [0.56, 0.92], [0.18, 0.45]);
+  const rightShade = useTransform(storyProgress, [0.56, 0.92], [0.11, 0.27]);
   const rightTextOpacity = useTransform(storyProgress, [0.68, 0.82], [0, 1]);
   const rightTextY = useTransform(storyProgress, [0.68, 0.82], [20, 0]);
 
@@ -133,7 +133,7 @@ export const FilmSection: React.FC = () => {
           </h2>
 
           <p className="film-light-copy">
-            From study and family time to the park, the West End and a quiet evening at home, the film follows everyday life around The Bolsover.
+            From study and family time to the park, the West End and quiet evenings at home, life at The Bolsover is shaped by the rhythm of London living.
           </p>
         </div>
       </div>
@@ -160,15 +160,16 @@ export const FilmSection: React.FC = () => {
                 alt="The Bolsover Edwardian Architecture"
                 fill
                 priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 60vw"
+                sizes="100vw"
+                quality={90}
                 className="object-cover object-center"
               />
             </motion.div>
             <motion.div
-              style={{ opacity: prefersReducedMotion ? 0.42 : leftShade }}
+              style={{ opacity: prefersReducedMotion ? 0.25 : leftShade }}
               className="absolute inset-0 bg-black"
             />
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.72)_100%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.06)_0%,rgba(0,0,0,0.43)_100%)]" />
 
             <motion.div
               style={{
@@ -217,15 +218,16 @@ export const FilmSection: React.FC = () => {
                 alt="The Bolsover exterior on Bolsover Street"
                 fill
                 loading="lazy"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 60vw"
+                sizes="100vw"
+                quality={90}
                 className="object-cover object-center"
               />
             </motion.div>
             <motion.div
-              style={{ opacity: prefersReducedMotion ? 0.42 : imageShade }}
+              style={{ opacity: prefersReducedMotion ? 0.25 : imageShade }}
               className="absolute inset-0 bg-black"
             />
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.72)_100%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.06)_0%,rgba(0,0,0,0.43)_100%)]" />
 
             <motion.div
               style={{
@@ -241,7 +243,7 @@ export const FilmSection: React.FC = () => {
                 A quietly confident London address.
               </h3>
               <p className="mt-4 font-sans text-sm sm:text-base leading-relaxed text-white/82 max-w-[32rem]">
-                From study and family time to the park, the West End and a quiet evening at home, the film follows everyday life around The Bolsover.
+                From study and family time to the park, the West End and quiet evenings at home, life at The Bolsover is shaped by the rhythm of London living.
               </p>
               <p className="mt-5 font-sans text-xs uppercase tracking-wider text-white/70">
                 3–8 Bolsover Street, Fitzrovia W1
@@ -266,15 +268,16 @@ export const FilmSection: React.FC = () => {
                 alt="Open-plan living room and kitchen at The Bolsover"
                 fill
                 loading="lazy"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 60vw"
+                sizes="100vw"
+                quality={90}
                 className="object-cover object-center"
               />
             </motion.div>
             <motion.div
-              style={{ opacity: prefersReducedMotion ? 0.42 : rightShade }}
+              style={{ opacity: prefersReducedMotion ? 0.25 : rightShade }}
               className="absolute inset-0 bg-black"
             />
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.72)_100%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.06)_0%,rgba(0,0,0,0.43)_100%)]" />
 
             <motion.div
               style={{

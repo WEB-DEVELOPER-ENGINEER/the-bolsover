@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useCMS } from "@/context/CMSContext";
 
@@ -17,6 +18,7 @@ export const ProjectIntro: React.FC = () => {
     stat2Label: "Bedrooms & duplex",
     stat3Value: "W1",
     stat3Label: "Fitzrovia, London",
+    image: "https://jaiybxlzrdnofevtlwrg.supabase.co/storage/v1/object/public/bolsover-media/apartments-cgi/the-bolsover-concierge-lobby.png"
   };
   const sectionRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -25,15 +27,26 @@ export const ProjectIntro: React.FC = () => {
   });
   const imageY = useTransform(scrollYProgress, [0, 1], [32, -32]);
 
+  const displayImage = intro.image && !intro.image.includes("/assets/images/building.png")
+    ? intro.image
+    : "https://jaiybxlzrdnofevtlwrg.supabase.co/storage/v1/object/public/bolsover-media/apartments-cgi/the-bolsover-concierge-lobby.png";
+
   return (
     <section ref={sectionRef} id="building" className="relative min-h-[100svh] overflow-hidden bg-luxury-black text-white">
-      <motion.img
-        src="/assets/images/lifestyle-stills/arrival.png"
-        alt="The Bolsover entrance on Bolsover Street"
+      <motion.div
         style={{ y: imageY }}
-        className="absolute inset-0 h-[calc(100%+64px)] w-full object-cover motion-reduce:transform-none"
-        loading="lazy"
-      />
+        className="absolute -inset-x-0 -top-8 -bottom-8 h-[calc(100%+64px)] w-full motion-reduce:transform-none"
+      >
+        <Image
+          src={displayImage}
+          alt="The Bolsover entrance on Bolsover Street"
+          fill
+          loading="lazy"
+          sizes="100vw"
+          quality={90}
+          className="object-cover object-center"
+        />
+      </motion.div>
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,8,0.88)_0%,rgba(8,8,8,0.62)_42%,rgba(8,8,8,0.16)_78%,rgba(8,8,8,0.18)_100%)]" />
 
       <div className="relative z-10 flex min-h-[100svh] items-end px-6 py-12 sm:px-10 sm:py-14 lg:px-16 lg:py-16">

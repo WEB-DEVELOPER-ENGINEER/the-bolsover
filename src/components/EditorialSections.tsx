@@ -21,7 +21,8 @@ export const ArchitectureSection = () => {
           alt="The Bolsover on Bolsover Street in Fitzrovia"
           fill
           loading="lazy"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 80vw"
+          sizes="100vw"
+          quality={90}
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/45 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.75)_100%)]" />
@@ -62,7 +63,8 @@ export const ApartmentsTeaserSection = () => {
           alt="Open-plan living room and kitchen at The Bolsover"
           fill
           loading="lazy"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 80vw"
+          sizes="100vw"
+          quality={90}
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/45 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.75)_100%)]" />

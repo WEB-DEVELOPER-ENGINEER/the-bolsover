@@ -3,53 +3,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Header } from "@/components/Header";
+import Image from "next/image";
 import { FooterSection } from "@/components/FooterSection";
 import { CMSProvider, useCMS, ApartmentRecord, ApartmentSlide } from "@/context/CMSContext";
-
-const defaultApartmentNineSlides: ApartmentSlide[] = [
-  {
-    id: "living-room",
-    label: "Living room",
-    caption: "Living, dining and kitchen arranged as one calm, light-filled room.",
-    kind: "image",
-    src: "/apartments/apartment-living-kitchen.png",
-  },
-  {
-    id: "kitchen-pan",
-    label: "Kitchen pan",
-    caption: "Drag across the frame to inspect the kitchen at your own pace.",
-    kind: "video",
-    src: "/apartments/kitchen-camera-pan.mp4",
-  },
-];
-
-const defaultApartmentsList: ApartmentRecord[] = Array.from({ length: 24 }, (_, index) => {
-  const number = index + 1;
-  const formattedNumber = String(number).padStart(2, "0");
-
-  if (number === 9) {
-    return {
-      number,
-      label: `Apartment ${formattedNumber}`,
-      residenceType: "Studio residence",
-      area: "485–540 sq ft",
-      floor: "—",
-      description:
-        "Open-plan living, bespoke dark oak joinery and quiet natural light, composed for everyday life in Fitzrovia.",
-      slides: defaultApartmentNineSlides,
-    };
-  }
-
-  return {
-    number,
-    label: `Apartment ${formattedNumber}`,
-    residenceType: "",
-    area: "",
-    floor: "",
-    description: "",
-    slides: [],
-  };
-});
 
 const SCRUB_EDGE_BUFFER = 0.12;
 const SCRUB_STEP_SECONDS = 0.1;
@@ -66,16 +22,18 @@ const NextArrow = () => (
   </svg>
 );
 
-const AccordionMark = ({ open }: { open: boolean }) => (
-  <span aria-hidden="true" className="relative block h-3.5 w-3.5 shrink-0">
-    <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-current" />
+function AccordionMark({ open }: { open: boolean }) {
+  return (
     <span
-      className={`absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-current transition-transform duration-300 motion-reduce:transition-none ${
-        open ? "scale-y-0" : "scale-y-100"
+      className={`apartment-accordion-icon inline-flex h-4 w-4 items-center justify-center text-xs transition-transform duration-300 ${
+        open ? "rotate-45" : ""
       }`}
-    />
-  </span>
-);
+      aria-hidden="true"
+    >
+      +
+    </span>
+  );
+}
 
 function ApartmentsPageContent() {
   const prefersReducedMotion = useReducedMotion();
@@ -93,23 +51,21 @@ function ApartmentsPageContent() {
   const pendingProgressRef = useRef(0);
 
   const apartmentsList = useMemo(() => {
-    if (liveApartments && liveApartments.length > 0) {
-      return liveApartments;
-    }
-    return defaultApartmentsList;
+    return liveApartments || [];
   }, [liveApartments]);
 
   const selectedApartment = useMemo(() => {
+    if (!apartmentsList || apartmentsList.length === 0) return null;
     const found = apartmentsList.find((apartment) => apartment.number === selectedApartmentNumber);
-    return found ?? apartmentsList[0] ?? defaultApartmentsList[8];
+    return found ?? apartmentsList[0] ?? null;
   }, [apartmentsList, selectedApartmentNumber]);
 
   // Extract specs & slides (supporting both direct schema & legacy details property)
-  const residenceType = selectedApartment.residenceType || selectedApartment.details?.residenceType || "—";
-  const area = selectedApartment.area || selectedApartment.details?.area || "—";
-  const floor = selectedApartment.floor || selectedApartment.details?.floor || "—";
-  const description = selectedApartment.description || selectedApartment.details?.description || "";
-  const slides: ApartmentSlide[] = selectedApartment.slides || selectedApartment.details?.slides || [];
+  const residenceType = selectedApartment?.residenceType || selectedApartment?.details?.residenceType || "—";
+  const area = selectedApartment?.area || selectedApartment?.details?.area || "—";
+  const floor = selectedApartment?.floor || selectedApartment?.details?.floor || "—";
+  const description = selectedApartment?.description || selectedApartment?.details?.description || "";
+  const slides: ApartmentSlide[] = selectedApartment?.slides || selectedApartment?.details?.slides || [];
 
   const slide = slides[activeSlide] ?? null;
   const isInteractiveVideo = slide?.kind === "video";
@@ -416,7 +372,7 @@ function ApartmentsPageContent() {
               isInteractiveVideo ? "apartment-scrub-surface touch-none" : ""
             }`}
             role={isInteractiveVideo ? "slider" : "region"}
-            aria-label={isInteractiveVideo ? "Interactive kitchen camera pan" : `${selectedApartment.label} media`}
+            aria-label={isInteractiveVideo ? "Interactive kitchen camera pan" : `${selectedApartment?.label || "Apartment"} media`}
             aria-valuemin={isInteractiveVideo ? 0 : undefined}
             aria-valuemax={isInteractiveVideo ? 100 : undefined}
             aria-valuenow={isInteractiveVideo ? Math.round(videoProgress * 100) : undefined}
@@ -429,18 +385,22 @@ function ApartmentsPageContent() {
             onPointerLeave={handlePointerLeave}
             onKeyDown={handleMediaKeyDown}
           >
-            {slide?.kind === "image" && (
-              <img
-                src={slide.src}
-                alt={`Open-plan living room and kitchen in ${selectedApartment.label}`}
-                className="absolute inset-0 h-full w-full object-cover"
+            {(slide?.kind === "image" || !slide?.kind) && (slide?.src || (slide as any)?.url) && (
+              <Image
+                src={slide.src || (slide as any).url}
+                alt={slide.label ? `${slide.label} in ${selectedApartment?.label || "residence"}` : `View in ${selectedApartment?.label || "residence"}`}
+                fill
+                priority={activeSlide === 0}
+                sizes="100vw"
+                quality={90}
+                className="object-cover"
               />
             )}
 
             {slide?.kind === "video" && (
               <video
                 ref={videoRef}
-                src={slide.src}
+                src={slide.src || (slide as any).url}
                 className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
                 muted
                 playsInline
@@ -463,10 +423,10 @@ function ApartmentsPageContent() {
               <div className="apartments-empty flex min-h-[64svh] items-center justify-center px-8 text-center lg:min-h-0">
                 <div>
                   <p className="font-sans text-xs">
-                    {String(selectedApartment.number).padStart(2, "0")} / {apartmentsList.length}
+                    {selectedApartment ? `${String(selectedApartment.number).padStart(2, "0")} / ${apartmentsList.length}` : ""}
                   </p>
                   <p className="mt-4 font-serif text-[clamp(2.8rem,6vw,6.8rem)] leading-none">
-                    {selectedApartment.label}
+                    {selectedApartment?.label || "The Bolsover"}
                   </p>
                   <p className="mt-5 font-sans text-xs">Residence imagery to follow</p>
                 </div>
@@ -483,6 +443,19 @@ function ApartmentsPageContent() {
                     <p className="mt-2 max-w-lg font-sans text-sm leading-relaxed text-white/70">
                       {slide.caption}
                     </p>
+                    {(slide as any).pdfUrl && (
+                      <a
+                        href={(slide as any).pdfUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pointer-events-auto mt-3 inline-flex items-center gap-2 rounded bg-white/10 px-3 py-1.5 font-mono text-xs uppercase tracking-wider text-[#c5a059] border border-[#c5a059]/30 transition-colors hover:bg-white/20 hover:text-white"
+                      >
+                        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Download Architectural PDF
+                      </a>
+                    )}
                   </div>
                   <p className="hidden font-sans text-xs tabular-nums text-white/66 sm:block">
                     0{activeSlide + 1} / 0{slides.length}
